@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageView_flag"
+    <androidx.emoji.widget.EmojiTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        android:textSize="28sp"
+        android:padding="5dp"
+        android:text="Test"
+        android:id="@+id/txtView"/>
 
     <TextView
         android:id="@+id/textView_country"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView_flag"
-        app:layout_constraintStart_toEndOf="@+id/imageView_flag"
-        app:layout_constraintTop_toTopOf="@+id/imageView_flag" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:layout_gravity="center_vertical"
+        android:text="TextView"/>
+
+</LinearLayout>
