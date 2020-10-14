@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FreeBee</string>
+    <string name="change_number"><u>Change Number</u></string>
+    <string name="tap_here_to_resend_sms"><u>Tap here to resend SMS</u></string>
 </resources>
