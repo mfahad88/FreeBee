@@ -2,6 +2,7 @@ package com.example.freebee;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -43,7 +44,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
         if(view.getId()==R.id.linear_header){
             finish();
         }else if(view.getId()==R.id.btn_continue){
-
+                startActivity(new Intent(this,RegistrationActivity.class));
         }else if(view.getId()==R.id.txt_changeNumber){
             finish();
         }

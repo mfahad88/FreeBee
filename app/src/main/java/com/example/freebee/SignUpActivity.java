@@ -26,27 +26,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-
-import com.example.freebee.helper.Utils;
-import com.example.freebee.models.country.Country;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-
-
-import com.squareup.picasso.Picasso;
 import com.ybs.countrypicker.CountryPicker;
 import com.ybs.countrypicker.CountryPickerListener;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
