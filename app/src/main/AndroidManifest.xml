@@ -16,7 +16,8 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".RegistrationActivity" />
+        <activity android:name=".RegistrationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".OtpActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".GetStartActivity" />

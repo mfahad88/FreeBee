@@ -4,15 +4,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.freebee.helper.Utils;
 import com.example.freebee.views.OtpEditText;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OtpActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
     private LinearLayout linear_header;
@@ -20,6 +31,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
     private String phoneNumber;
     private Button btn_continue;
     private OtpEditText et_otp;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +44,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
         txt_changeNumber=findViewById(R.id.txt_changeNumber);
         btn_continue=findViewById(R.id.btn_continue);
         et_otp=findViewById(R.id.et_otp);
+        progressBar=findViewById(R.id.progressBar);
         txt_changeNumber.setOnClickListener(this);
         linear_header.setOnClickListener(this);
         btn_continue.setOnClickListener(this);
@@ -44,7 +57,45 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
         if(view.getId()==R.id.linear_header){
             finish();
         }else if(view.getId()==R.id.btn_continue){
-                startActivity(new Intent(this,RegistrationActivity.class));
+            progressBar.setVisibility(View.VISIBLE);
+           ApiClient.getInstance().activateaccount(phoneNumber,"123123",et_otp.getText().toString())
+                   .enqueue(new Callback<JsonElement>() {
+                       @Override
+                       public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                           if(response.isSuccessful()){
+                               JsonObject object=response.body().getAsJsonObject();
+
+                               JsonObject data=object.getAsJsonObject("data");
+                               String message=data.get("message").getAsString();
+
+                               if(message.equalsIgnoreCase("User created")) {
+                                   Utils.hideKeyboard(OtpActivity.this);
+                                   startActivity(new Intent(OtpActivity.this, RegistrationActivity.class));
+                               }
+
+
+                           }else{
+                               Log.e("Error------>",response.body().toString());
+                               /*JsonObject object=response.body().getAsJsonObject();
+
+                               JsonObject data=object.getAsJsonObject("error");
+                               String message=data.get("message").getAsString();*/
+                               progressBar.setVisibility(View.GONE);
+//                               Toast.makeText(OtpActivity.this, "Error: "+message, Toast.LENGTH_SHORT).show();
+                               new Handler().postDelayed(new Runnable() {
+                                   @Override
+                                   public void run() {
+                                       startActivity(new Intent(OtpActivity.this, SignUpActivity.class));
+                                   }
+                               },2000);
+                           }
+                       }
+
+                       @Override
+                       public void onFailure(Call<JsonElement> call, Throwable t) {
+                           t.printStackTrace();
+                       }
+                   });
         }else if(view.getId()==R.id.txt_changeNumber){
             finish();
         }

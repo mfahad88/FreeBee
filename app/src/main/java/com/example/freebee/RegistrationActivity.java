@@ -3,21 +3,29 @@ package com.example.freebee;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
     EditText edt_first;
     EditText edt_last;
+    EditText edt_birthday;
     Spinner spinner_gender;
-    DatePicker datePicker;
+
     Button btn_continue;
+    private String []Months={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,18 +49,31 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
             }
         });
+        edt_birthday.setOnClickListener(this);
     }
 
     private void initViews() {
         edt_first=findViewById(R.id.edt_first);
         edt_last=findViewById(R.id.edt_last);
         spinner_gender=findViewById(R.id.spinner_gender);
-        datePicker=findViewById(R.id.datePicker);
+        edt_birthday=findViewById(R.id.edt_birthday);
         btn_continue=findViewById(R.id.btn_continue);
     }
 
+
     @Override
     public void onClick(View view) {
+        if(view.getId()==R.id.edt_birthday){
+            final DatePickerDialog datePickerDialog=new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                    Log.e("Date------->",datePicker.getDayOfMonth()+","+datePicker.getMonth()+","+datePicker.getYear());
+                    edt_birthday.setText(datePicker.getDayOfMonth()+"-"+Months[datePicker.getMonth()]+"-"+datePicker.getYear());
+                }
+            },1990,0,1);
+            datePickerDialog.show();
 
+
+        }
     }
 }

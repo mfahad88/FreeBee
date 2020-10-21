@@ -102,9 +102,18 @@
         android:layout_marginTop="50dp"
         android:layout_alignLeft="@id/edt_country"
         android:layout_alignRight="@id/edt_country"
-        android:background="@color/colorAccent"
         android:textAllCaps="false"
+        android:enabled="false"
         android:id="@+id/btn_continue"
         android:text="Continue"/>
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_continue"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp"
+        android:id="@+id/progressBar"
+        android:visibility="gone"/>
 </RelativeLayout>
