@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     EditText edt_last;
     EditText edt_birthday;
     Spinner spinner_gender;
-
+    LinearLayout linear_header;
     Button btn_continue;
     private String []Months={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
     @Override
@@ -50,6 +51,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             }
         });
         edt_birthday.setOnClickListener(this);
+        linear_header.setOnClickListener(this);
     }
 
     private void initViews() {
@@ -57,6 +59,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         edt_last=findViewById(R.id.edt_last);
         spinner_gender=findViewById(R.id.spinner_gender);
         edt_birthday=findViewById(R.id.edt_birthday);
+        linear_header=findViewById(R.id.linear_header);
         btn_continue=findViewById(R.id.btn_continue);
     }
 
@@ -74,6 +77,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
             datePickerDialog.show();
 
 
+        }else if(view.getId()==R.id.linear_header){
+            finish();
         }
     }
 }
