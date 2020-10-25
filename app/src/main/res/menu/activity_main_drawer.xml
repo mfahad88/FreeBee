@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_baseline_person_24"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/ic_baseline_notifications_none_24"
+            android:title="Notifications" />
+        <item
+            android:id="@+id/nav_reward"
+            android:icon="@drawable/ic_baseline_card_giftcard_24"
+            android:title="Rewards" />
+
+        <item
+            android:id="@+id/nav_promo"
+            android:icon="@drawable/ic_baseline_card_giftcard_24"
+            android:title="Promos" />
+
+        <item
+            android:id="@+id/nav_call_credits"
+            android:icon="@drawable/ic_baseline_monetization_on_24"
+            android:title="Call Credits" />
+    </group>
+</menu>

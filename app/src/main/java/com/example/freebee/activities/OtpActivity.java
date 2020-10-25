@@ -1,4 +1,4 @@
-package com.example.freebee;
+package com.example.freebee.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,14 +16,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.freebee.ApiClient;
+import com.example.freebee.R;
 import com.example.freebee.helper.Utils;
 import com.example.freebee.views.OtpEditText;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 

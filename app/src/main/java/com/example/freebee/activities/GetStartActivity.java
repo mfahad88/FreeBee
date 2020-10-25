@@ -1,4 +1,4 @@
-package com.example.freebee;
+package com.example.freebee.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.freebee.R;
 
 public class GetStartActivity extends AppCompatActivity implements View.OnClickListener {
     Button btn_getstarted;

@@ -13,15 +13,22 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".RegistrationActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
-        <activity android:name=".OtpActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".GetStartActivity" />
-        <activity android:name=".SplashActivity">
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.RegistrationActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".activities.OtpActivity" />
+        <activity android:name=".activities.SignUpActivity" />
+        <activity android:name=".activities.GetStartActivity" />
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

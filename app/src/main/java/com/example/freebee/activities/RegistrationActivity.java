@@ -1,23 +1,21 @@
-package com.example.freebee;
+package com.example.freebee.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import com.example.freebee.R;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
     EditText edt_first;
@@ -52,6 +50,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         });
         edt_birthday.setOnClickListener(this);
         linear_header.setOnClickListener(this);
+        btn_continue.setOnClickListener(this);
     }
 
     private void initViews() {
@@ -79,6 +78,8 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
         }else if(view.getId()==R.id.linear_header){
             finish();
+        }else if(view.getId()==R.id.btn_continue){
+            startActivity(new Intent(view.getContext(),MainActivity.class ));
         }
     }
 }
