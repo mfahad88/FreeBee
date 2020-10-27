@@ -1,5 +1,6 @@
 package com.example.freebee;
 
+import com.example.freebee.models.CallRates.Packages;
 import com.google.gson.JsonElement;
 
 import retrofit2.Call;
@@ -29,4 +30,6 @@ public interface ApiInterface {
             @Query("username") String username,
             @Query("password") String password,
             @Query("pinno") String pinno);
+    @GET("/api/getpackages")
+    Call<Packages> getPackages(@Query("username")String username,@Query("password")String password,@Query("packagename")String packagename);
 }
