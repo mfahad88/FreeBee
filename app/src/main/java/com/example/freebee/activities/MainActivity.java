@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Menu;
 
 import com.example.freebee.R;
+import com.example.freebee.fragments.ContactFragment;
 import com.example.freebee.fragments.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case "Contacts":
+                        replaceFragment(new ContactFragment());
                         break;
 
                     case "Calls":
