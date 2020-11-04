@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     >
 
-    <TextView
+<!--    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_alphabet"
@@ -14,12 +14,12 @@
         android:visibility="gone"
         android:textSize="24sp"
         android:textColor="@color/colorAccent"
-        android:layout_centerVertical="true"/>
+        android:layout_centerVertical="true"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/txt_alphabet"
+
         android:id="@+id/linearLayout">
 
         <ImageView

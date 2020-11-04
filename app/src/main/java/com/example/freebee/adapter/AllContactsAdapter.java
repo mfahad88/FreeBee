@@ -7,8 +7,11 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,16 +21,21 @@ import com.example.freebee.R;
 import com.example.freebee.models.Contact.ContactVO;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class AllContactsAdapter extends RecyclerView.Adapter{
+public class AllContactsAdapter extends RecyclerView.Adapter implements Filterable {
 
     private List<ContactVO> contactVOList;
     private Context mContext;
+    private List<ContactVO> contactVOListAll;
     public AllContactsAdapter(List<ContactVO> contactVOList, Context mContext){
         this.contactVOList = contactVOList;
         this.mContext = mContext;
+        this.contactVOListAll=new ArrayList<>(contactVOList);
     }
+
+
 
     @Override
     public ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,10 +54,10 @@ public class AllContactsAdapter extends RecyclerView.Adapter{
             int previous=holder.getPosition()-1;
             System.out.println(previous+". "+contactVOList.get(previous).getContactName().substring(0,1)+"\t"+position+". "+contactVOList.get(position).getContactName().substring(0,1)+"\t"+
                     String.valueOf(contactVOList.get(previous).getContactName().charAt(0)!=contactVOList.get(position).getContactName().charAt(0)));
-            if(contactVOList.get(previous).getContactName().charAt(0)!=contactVOList.get(position).getContactName().charAt(0)){
+            /*if(contactVOList.get(previous).getContactName().charAt(0)!=contactVOList.get(position).getContactName().charAt(0)){
                 viewHolder.txt_alphabet.setText(String.valueOf(contactVOList.get(position).getContactName().charAt(0)));
                 viewHolder.txt_alphabet.setVisibility(View.VISIBLE);
-            }
+            }*/
         }
 
         try{
@@ -81,6 +89,37 @@ public class AllContactsAdapter extends RecyclerView.Adapter{
         return contactVOList.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+    Filter filter=new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<ContactVO> filterList=new ArrayList<>();
+            if(charSequence.toString().isEmpty()){
+                filterList.addAll(contactVOListAll);
+            }else {
+                for(ContactVO vo:contactVOListAll){
+                    if(vo.getContactName().toLowerCase().contains(charSequence.toString().toLowerCase())){
+                        filterList.add(vo);
+                    }
+                }
+            }
+            FilterResults filterResults=new FilterResults();
+            filterResults.values=filterList;
+
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            contactVOList.clear();
+            contactVOList.addAll((List<ContactVO>)filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
     public static class ContactViewHolder extends RecyclerView.ViewHolder{
 
         ImageView ivContactImage;
@@ -93,7 +132,7 @@ public class AllContactsAdapter extends RecyclerView.Adapter{
             ivContactImage = (ImageView) itemView.findViewById(R.id.ivContactImage);
             tvContactName = (TextView) itemView.findViewById(R.id.tvContactName);
             tvPhoneNumber = (TextView) itemView.findViewById(R.id.tvPhoneNumber);
-            txt_alphabet=itemView.findViewById(R.id.txt_alphabet);
+//            txt_alphabet=itemView.findViewById(R.id.txt_alphabet);
         }
     }
 }

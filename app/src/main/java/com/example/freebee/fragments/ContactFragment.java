@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.ContactsContract;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.example.freebee.R;
@@ -29,7 +33,8 @@ public class ContactFragment extends Fragment {
     private View root;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-
+    private LinearLayout linearContact;
+    private EditText edtFind;
     private AllContactsAdapter contactAdapter;
 
 
@@ -40,7 +45,25 @@ public class ContactFragment extends Fragment {
         root=inflater.inflate(R.layout.fragment_contact, container, false);
         recyclerView=root.findViewById(R.id.recyclerView);
         progressBar=root.findViewById(R.id.progressBar);
+        linearContact=root.findViewById(R.id.linearContact);
+        edtFind=root.findViewById(R.id.edtFind);
         new AsyncContacts().execute();
+        edtFind.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                contactAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         return root;
     }
 
@@ -62,7 +85,7 @@ public class ContactFragment extends Fragment {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(contactAdapter);
                 progressBar.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+                linearContact.setVisibility(View.VISIBLE);
             }
         }
     }

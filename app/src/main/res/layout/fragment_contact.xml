@@ -10,14 +10,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:visibility="visible"
         android:id="@+id/progressBar"/>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-
-        android:id="@+id/recyclerView"
-        android:visibility="gone"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/linearContact"
+        android:orientation="vertical">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/square_edittext"
+            android:hint="Find..."
+            android:id="@+id/edtFind"
+            android:layout_margin="5dp"
+            android:padding="5dp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 
 </FrameLayout>
