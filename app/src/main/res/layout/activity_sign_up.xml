@@ -89,7 +89,7 @@
         android:layout_below="@id/txt_phoneNumber"
         android:id="@+id/edt_phoneNumber"
         android:inputType="phone"
-        android:maxLength="10"
+        android:maxLength="11"
         android:textColorHighlight="@color/colorAccent"
         android:singleLine="true"
         android:layout_toRightOf="@id/edt_dialCode"

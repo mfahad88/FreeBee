@@ -35,6 +35,7 @@ import java.util.Map;
 public class SplashActivity extends AppCompatActivity implements OnInitializeListener {
     private AbtoPhone abtoPhone;
     final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,23 +43,25 @@ public class SplashActivity extends AppCompatActivity implements OnInitializeLis
         // Get AbtoPhone instance
         abtoPhone = ((AbtoApplication) getApplicationContext()).getAbtoPhone();
 
-        boolean bCanStartPhoneInitialization = (Build.VERSION.SDK_INT >= 23) ?  askPermissions() : true;
+        boolean bCanStartPhoneInitialization = (Build.VERSION.SDK_INT >= 23) ? askPermissions() : true;
 
-        if(bCanStartPhoneInitialization)    initPhone();
+        if (bCanStartPhoneInitialization) initPhone();
         startNextScreen();
     }
 
 
-
-    private boolean askPermissions()
-    {
+    private boolean askPermissions() {
         List<String> permissionsNeeded = new ArrayList<String>();
 
         final List<String> permissionsList = new ArrayList<String>();
-        if (!addPermission(permissionsList, Manifest.permission.RECORD_AUDIO))           permissionsNeeded.add("Record audio");
-        if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE)) permissionsNeeded.add("Write logs to sd card");
-        if (!addPermission(permissionsList, Manifest.permission.CAMERA))                 permissionsNeeded.add("Camera");
-        if (!addPermission(permissionsList, Manifest.permission.USE_SIP))                permissionsNeeded.add("Use SIP protocol");
+        if (!addPermission(permissionsList, Manifest.permission.RECORD_AUDIO))
+            permissionsNeeded.add("Record audio");
+        if (!addPermission(permissionsList, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            permissionsNeeded.add("Write logs to sd card");
+        if (!addPermission(permissionsList, Manifest.permission.CAMERA))
+            permissionsNeeded.add("Camera");
+        if (!addPermission(permissionsList, Manifest.permission.USE_SIP))
+            permissionsNeeded.add("Use SIP protocol");
 
 
         if (permissionsList.size() > 0) {
@@ -89,7 +92,8 @@ public class SplashActivity extends AppCompatActivity implements OnInitializeLis
         if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
             permissionsList.add(permission);
             // Check for Rationale Option
-            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission))     return false;
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(this, permission))
+                return false;
         }
 
 
@@ -106,25 +110,21 @@ public class SplashActivity extends AppCompatActivity implements OnInitializeLis
     }
 
 
-
-
     @TargetApi(23)
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-    {
-        switch (requestCode)
-        {
-            case REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS:
-            {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS: {
                 Map<String, Integer> perms = new HashMap<String, Integer>();
                 //Initial
-                perms.put(Manifest.permission.RECORD_AUDIO,           PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.RECORD_AUDIO, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.WRITE_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
-                perms.put(Manifest.permission.CAMERA,                 PackageManager.PERMISSION_GRANTED);
-                perms.put(Manifest.permission.USE_SIP,                PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.CAMERA, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.USE_SIP, PackageManager.PERMISSION_GRANTED);
 
                 //Fill with results
-                for (int i = 0; i < permissions.length; i++) perms.put(permissions[i], grantResults[i]);
+                for (int i = 0; i < permissions.length; i++)
+                    perms.put(permissions[i], grantResults[i]);
 
                 //Check for ACCESS_FINE_LOCATION
                 if (perms.get(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED &&
@@ -152,11 +152,9 @@ public class SplashActivity extends AppCompatActivity implements OnInitializeLis
         super.onResume();
     }
 
-    protected void initPhone()
-    {
+    protected void initPhone() {
         //Verify is SDKs service already running
-        if (abtoPhone.isActive())
-        {
+        if (abtoPhone.isActive()) {
             startNextScreen();
             return;
         }
@@ -167,24 +165,26 @@ public class SplashActivity extends AppCompatActivity implements OnInitializeLis
         AbtoPhoneCfg config = abtoPhone.getConfig();
 
         for (Codec c : Codec.values()) config.setCodecPriority(c, (short) 0);
-        config.setCodecPriority(Codec.PCMA, (short) 80);
-        config.setCodecPriority(Codec.PCMU, (short) 79);
+
         config.setCodecPriority(Codec.G729, (short) 78);
+        config.setCodecPriority(Codec.G723, (short) 79);
+
 
         config.setCodecPriority(Codec.H264, (short) 220);
         config.setCodecPriority(Codec.H263_1998, (short) 0);
 
-
-        config.setSignallingTransport(AbtoPhoneCfg.SignalingTransportType.UDP);//TCP);//TLS);
-        config.setKeepAliveInterval(AbtoPhoneCfg.SignalingTransportType.UDP, 30);
+        config.setSignallingTransport(AbtoPhoneCfg.SignalingTransportType.TLS); // Switch to TLS SIP signalling
+        config.setTLSVerifyServer(false); // Disable Certificate verification for initial connect
+        //config.setSignallingTransport(AbtoPhoneCfg.SignalingTransportType.UDP);//TCP);//TLS);
+        config.setKeepAliveInterval(AbtoPhoneCfg.SignalingTransportType.TLS, 30);
         //config.setTLSVerifyServer(true);
 
-        config.setSipPort(0);
+        config.setSipPort(5061);
         //config.setDTMFmode(AbtoPhoneCfg.DTMF_MODE.INFO);
         //config.setSipPort(5555);
 
-        //config.setSTUNEnabled(true);
-        //config.setSTUNServer("stun.l.google.com:19302");
+        config.setSTUNEnabled(true);
+        config.setSTUNServer("stun.l.google.com:19302");
 
         config.setUseSRTP(false);
         config.setEnableAutoSendRtpVideo(true);
@@ -205,16 +205,14 @@ public class SplashActivity extends AppCompatActivity implements OnInitializeLis
         //abtoPhone.initializeForeground(null);//start service in foreground mode
     }
 
-    public void onDestroy()
-    {
+    public void onDestroy() {
         abtoPhone.setInitializeListener(null);
         super.onDestroy();
 
     }//onDestroy
 
 
-    private boolean isAccountRegistered()
-    {
+    private boolean isAccountRegistered() {
         //Get current account
         long acc = abtoPhone.getCurrentAccountId();
         if ((acc == -1) || !abtoPhone.isActive()) return false;
@@ -222,8 +220,7 @@ public class SplashActivity extends AppCompatActivity implements OnInitializeLis
         //Check accounts status (service keeps it registered)
         try {
             SipProfileState accState = abtoPhone.getSipProfileState(acc);
-            if ((accState != null) && accState.isActive() && (accState.getStatusCode() == 200))
-            {
+            if ((accState != null) && accState.isActive() && (accState.getStatusCode() == 200)) {
                 return true;
             }
         } catch (RemoteException e) {
@@ -238,7 +235,8 @@ public class SplashActivity extends AppCompatActivity implements OnInitializeLis
         switch (state) {
             case START:
             case INFO:
-            case WARNING: break;
+            case WARNING:
+                break;
             case FAIL:
 
                 new AlertDialog.Builder(SplashActivity.this)
@@ -268,9 +266,9 @@ public class SplashActivity extends AppCompatActivity implements OnInitializeLis
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this,GetStartActivity.class));
+                startActivity(new Intent(SplashActivity.this, GetStartActivity.class));
                 finish();
             }
-        },5000);
+        }, 5000);
     }
 }

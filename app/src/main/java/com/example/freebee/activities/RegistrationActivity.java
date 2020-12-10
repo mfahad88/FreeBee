@@ -6,6 +6,9 @@ import androidx.core.content.ContextCompat;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.freebee.R;
 
@@ -21,6 +25,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     EditText edt_first;
     EditText edt_last;
     EditText edt_birthday;
+    EditText edt_email;
     Spinner spinner_gender;
     LinearLayout linear_header;
     Button btn_continue;
@@ -48,6 +53,29 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
 
             }
         });
+
+        edt_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(!TextUtils.isEmpty(edt_first.getText()) && !TextUtils.isEmpty(edt_last.getText()) && !TextUtils.isEmpty(edt_email.getText())) {
+                    btn_continue.setEnabled(true);
+                    int backgroundColor = ContextCompat.getColor(RegistrationActivity.this, R.color.colorAccent);
+                    btn_continue.setBackgroundColor(backgroundColor);
+                }else{
+                    btn_continue.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         edt_birthday.setOnClickListener(this);
         linear_header.setOnClickListener(this);
         btn_continue.setOnClickListener(this);
@@ -58,6 +86,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         edt_last=findViewById(R.id.edt_last);
         spinner_gender=findViewById(R.id.spinner_gender);
         edt_birthday=findViewById(R.id.edt_birthday);
+        edt_email=findViewById(R.id.edt_email);
         linear_header=findViewById(R.id.linear_header);
         btn_continue=findViewById(R.id.btn_continue);
     }
@@ -79,7 +108,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         }else if(view.getId()==R.id.linear_header){
             finish();
         }else if(view.getId()==R.id.btn_continue){
-            startActivity(new Intent(view.getContext(),MainActivity.class ));
+            startActivity(new Intent(view.getContext(), MainActivity.class));
         }
     }
 }
