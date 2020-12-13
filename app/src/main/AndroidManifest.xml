@@ -95,7 +95,8 @@
 
         <provider
             android:name="org.abtollc.db.DBProvider"
-            android:authorities="com.abtotest.voiptest.abtodb" />
+            android:authorities="com.example.freebee.abtodb"
+            />
 
         <meta-data
             android:name="AbtoVoipForegroundIcon"

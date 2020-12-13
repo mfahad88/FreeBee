@@ -130,7 +130,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        if(edt_phoneNumber.length()==10){
+        if(edt_phoneNumber.length()>=9){
             btn_continue.setEnabled(true);
             btn_continue.setBackground(getResources().getDrawable(R.color.colorAccent));
         }else{
