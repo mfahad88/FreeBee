@@ -3,6 +3,7 @@ package com.example.freebee.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -64,6 +65,7 @@ public class GetStartActivity extends AppCompatActivity implements View.OnClickL
             btn_sign_in.setEnabled(true);
         }else{
             btn_sign_in.setEnabled(false);
+            btn_sign_in.setBackgroundColor(Color.LTGRAY);
         }
     }
 
