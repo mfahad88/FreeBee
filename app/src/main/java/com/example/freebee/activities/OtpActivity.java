@@ -36,6 +36,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
     private Button btn_continue;
     private OtpEditText et_otp;
     private ProgressBar progressBar;
+    public static final String PHONE_NO="PhoneNo";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
         txt_number.append(phoneNumber);
         et_otp.addTextChangedListener(this);
         txt_resend.setOnClickListener(this);
+        Toast.makeText(this, ""+phoneNumber, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -77,7 +79,9 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
 
                                if(message.equalsIgnoreCase("User Activated")) {
                                    Utils.hideKeyboard(OtpActivity.this);
-                                   startActivity(new Intent(OtpActivity.this, RegistrationActivity.class));
+                                   Intent intent=new Intent(OtpActivity.this, RegistrationActivity.class);
+                                   intent.putExtra(PHONE_NO,phoneNumber);
+                                   startActivity(intent);
                                    finish();
                                }
 
@@ -114,7 +118,7 @@ public class OtpActivity extends AppCompatActivity implements View.OnClickListen
             finish();
         }else if(view.getId()==R.id.txt_resend){
             progressBar.setVisibility(View.VISIBLE);
-            ApiClient.getInstance().createuser(phoneNumber,"123123").enqueue(new Callback<JsonElement>() {
+            ApiClient.getInstance().createuser2(phoneNumber,"123123").enqueue(new Callback<JsonElement>() {
                 @Override
                 public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
                     if(response.isSuccessful()){

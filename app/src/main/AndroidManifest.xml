@@ -3,19 +3,18 @@
     package="com.example.freebee">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- required for 'disable registration' mode -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- write logs -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /><!-- speaker mode -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> <!-- speaker mode -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.USE_SIP" />
     <uses-permission android:name="android.permission.CONFIGURE_SIP" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- android 4 -->
-
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
@@ -48,24 +47,29 @@
     <uses-feature
         android:name="android.hardware.camera.front"
         android:required="false" />
+
     <application
-        android:allowBackup="true"
         android:name="org.abtollc.sdk.AbtoNotificationApplication"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".activities.CreatePasswordActivity"></activity>
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name=".activities.RegistrationActivity"
@@ -79,9 +83,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Main service -->
+        </activity> <!-- Main service -->
         <service
             android:name="org.abtollc.service.ABTOSipService"
             android:stopWithTask="false">
@@ -91,13 +93,22 @@
             </intent-filter>
         </service>
 
-        <provider android:name="org.abtollc.db.DBProvider"
-            android:authorities="com.abtotest.voiptest.abtodb"/>
+        <provider
+            android:name="org.abtollc.db.DBProvider"
+            android:authorities="com.abtotest.voiptest.abtodb" />
 
-        <meta-data android:name="AbtoVoipForegroundIcon" android:resource="@drawable/ic_notif_pick_up_audio" />
-        <meta-data android:name="AbtoVoipForegroundTitle" android:value="@string/app_name" />
-        <meta-data android:name="AbtoVoipForegroundActivity" android:value="com.abtotest.voiptest.MainActivity" />
-        <meta-data android:name="AbtoVoipCallActivity" android:value="com.abtotest.voiptest.ScreenAV" />
+        <meta-data
+            android:name="AbtoVoipForegroundIcon"
+            android:resource="@drawable/ic_notif_pick_up_audio" />
+        <meta-data
+            android:name="AbtoVoipForegroundTitle"
+            android:value="@string/app_name" />
+        <meta-data
+            android:name="AbtoVoipForegroundActivity"
+            android:value="com.abtotest.voiptest.MainActivity" />
+        <meta-data
+            android:name="AbtoVoipCallActivity"
+            android:value="com.abtotest.voiptest.ScreenAV" />
     </application>
 
 </manifest>

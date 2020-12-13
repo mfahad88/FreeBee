@@ -19,7 +19,13 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.freebee.ApiClient;
 import com.example.freebee.R;
+import com.example.freebee.models.CreateEmail.CreateEmail;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
     EditText edt_first;
@@ -29,12 +35,18 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     Spinner spinner_gender;
     LinearLayout linear_header;
     Button btn_continue;
+    String phoneNumber;
     private String []Months={"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         initViews();
+        if(getIntent()!=null){
+            phoneNumber=getIntent().getStringExtra(OtpActivity.PHONE_NO);
+
+        }
+        Toast.makeText(RegistrationActivity.this, "PhoneNumber: "+phoneNumber, Toast.LENGTH_SHORT).show();
         btn_continue.setOnClickListener(this);
         spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -108,7 +120,28 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         }else if(view.getId()==R.id.linear_header){
             finish();
         }else if(view.getId()==R.id.btn_continue){
-            startActivity(new Intent(view.getContext(), MainActivity.class));
+            ApiClient.getInstance().setEmail(phoneNumber,"123123",edt_email.getText().toString())
+                    .enqueue(new Callback<CreateEmail>() {
+                        @Override
+                        public void onResponse(Call<CreateEmail> call, Response<CreateEmail> response) {
+                            if(response.isSuccessful()){
+
+                                if(response.body().getData().getMessage().equalsIgnoreCase("Updated emailid successfully")){
+                                    Intent intent=new Intent(RegistrationActivity.this, CreatePasswordActivity.class);
+                                    intent.putExtra(OtpActivity.PHONE_NO,phoneNumber);
+                                    startActivity(intent);
+                                }else{
+                                    Toast.makeText(RegistrationActivity.this, "Error: "+response.body().getData().toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<CreateEmail> call, Throwable t) {
+
+                        }
+                    });
+            
         }
     }
 }

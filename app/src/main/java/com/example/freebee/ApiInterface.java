@@ -1,6 +1,8 @@
 package com.example.freebee;
 
 import com.example.freebee.models.CallRates.Packages;
+import com.example.freebee.models.CreateEmail.CreateEmail;
+import com.example.freebee.models.CreatePassword.CreatePassword;
 import com.google.gson.JsonElement;
 
 import retrofit2.Call;
@@ -11,6 +13,10 @@ import retrofit2.http.Query;
 public interface ApiInterface {
     @POST("/api/createuser?username=admin&password=Tringy%232020$&reseller=0&signup=0&otp=1")
     Call<JsonElement> createuser(
+            @Query("createuser") String number, @Query("createpassword") String password);
+
+    @POST("/api/createuser?username=admin&password=Tringy%232020$&reseller=0&signup=0&otp=2")
+    Call<JsonElement> createuser2(
             @Query("createuser") String number, @Query("createpassword") String password);
 
     @POST("/api/activateaccount")
@@ -32,4 +38,10 @@ public interface ApiInterface {
             @Query("pinno") String pinno);
     @GET("/api/getpackages")
     Call<Packages> getPackages(@Query("username")String username,@Query("password")String password,@Query("packagename")String packagename);
+
+    @POST("/api/updatepassword")
+    Call<CreatePassword> createPassword(@Query("username")String username,@Query("password")String password,@Query("newpassword")String newpassword);
+
+    @POST("/api/setemailid")
+    Call<CreateEmail> setEmail(@Query("username")String username,@Query("password")String password,@Query("emailid")String emailid);
 }
