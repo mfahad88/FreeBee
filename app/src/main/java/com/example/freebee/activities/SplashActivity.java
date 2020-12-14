@@ -46,8 +46,10 @@ public class SplashActivity extends AppCompatActivity implements OnInitializeLis
         boolean bCanStartPhoneInitialization = (Build.VERSION.SDK_INT >= 23) ? askPermissions() : true;
 
         if (bCanStartPhoneInitialization) initPhone();
-        startNextScreen();
+//        startNextScreen();
     }
+
+
 
 
     private boolean askPermissions() {
@@ -266,7 +268,7 @@ public class SplashActivity extends AppCompatActivity implements OnInitializeLis
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, GetStartActivity.class));
+                startActivity(new Intent(SplashActivity.this,isAccountRegistered() ? MainActivity.class : GetStartActivity.class));
                 finish();
             }
         }, 5000);

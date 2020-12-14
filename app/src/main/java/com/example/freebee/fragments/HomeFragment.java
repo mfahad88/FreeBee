@@ -17,6 +17,9 @@ import com.example.freebee.R;
 import com.example.freebee.adapter.PackagesAdapter;
 import com.example.freebee.models.CallRates.Packages;
 
+import org.abtollc.sdk.AbtoApplication;
+import org.abtollc.sdk.AbtoPhone;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,6 +28,8 @@ public class HomeFragment extends Fragment {
     View root;
     ProgressBar progressBar;
     RecyclerView recyclerView;
+    String username,password;
+    AbtoPhone abtoPhone;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +43,14 @@ public class HomeFragment extends Fragment {
         root=inflater.inflate(R.layout.fragment_home, container, false);
         progressBar=root.findViewById(R.id.progressBar);
         recyclerView=root.findViewById(R.id.recyclerView);
+
+        abtoPhone = ((AbtoApplication) getActivity().getApplication()).getAbtoPhone();
+        int accId = (int)abtoPhone.getCurrentAccountId();
+        username=abtoPhone.getConfig().getAccount(accId).username;
+        password=abtoPhone.getConfig().getAccount(accId).getPassword();
         setRecyclerView();
-        ApiClient.getInstance().getPackages("+923338875585","123123","NULL")
+
+        ApiClient.getInstance().getPackages(username,password,"NULL")
                 .enqueue(new Callback<Packages>() {
                     @Override
                     public void onResponse(Call<Packages> call, Response<Packages> response) {
